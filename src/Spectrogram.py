@@ -20,7 +20,7 @@ class Spectrogram(object):
         frame_stride = 0.01
 
 
-        frame_length, frame_step = frame_size * sample_rate, frame_stride * sample_rate  # Convert from seconds to samples
+        frame_length, frame_step = frame_size * self.sample_rate, frame_stride * self.sample_rate  # Convert from seconds to samples
         signal_length = len(emphasized_signal)
         frame_length = int(round(frame_length))
         frame_step = int(round(frame_step))
@@ -43,10 +43,10 @@ class Spectrogram(object):
 
         nfilt = 40
         low_freq_mel = 0
-        high_freq_mel = (2595 * numpy.log10(1 + (sample_rate / 2) / 700))  # Convert Hz to Mel
+        high_freq_mel = (2595 * numpy.log10(1 + (self.sample_rate / 2) / 700))  # Convert Hz to Mel
         mel_points = numpy.linspace(low_freq_mel, high_freq_mel, nfilt + 2)  # Equally spaced in Mel scale
         hz_points = (700 * (10**(mel_points / 2595) - 1))  # Convert Mel to Hz
-        bin = numpy.floor((NFFT + 1) * hz_points / sample_rate)
+        bin = numpy.floor((NFFT + 1) * hz_points / self.sample_rate)
 
         fbank = numpy.zeros((nfilt, int(numpy.floor(NFFT / 2 + 1))))
         for m in range(1, nfilt + 1):
