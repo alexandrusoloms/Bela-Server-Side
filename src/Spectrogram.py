@@ -2,21 +2,17 @@ import numpy
 import scipy.io.wavfile
 from scipy.fftpack import dct
 
-# sample_rate, signal = scipy.io.wavfile.read('../data/19700101_000000.WAV')  # File assumed to be in the same directory
-sample_rate, signal = scipy.io.wavfile.read("/home/mariussolomes/final_project/summer2019/RealCoo/data/testBird.wav")
-# signal = signal[0:int(3.5 * sample_rate)]  # Keep the first 3.5 seconds
-
 
 class Spectrogram(object):
     def __init__(self, file_path):
         self.file_path = file_path
         self.sample_rate, self.signal = None, None
-        
+
         self.__read_file()
-        
+
     def __read_file(self):
         self.sample_rate, self.signal = scipy.io.wavfile.read(self.file_path)
-        
+
     def process(self):
         pre_emphasis = 0.97
         emphasized_signal = numpy.append(self.signal[0], self.signal[1:] - pre_emphasis * self.signal[:-1])
@@ -67,25 +63,3 @@ class Spectrogram(object):
         filter_banks = numpy.where(filter_banks == 0, numpy.finfo(float).eps, filter_banks)  # Numerical Stability
         filter_banks = 20 * numpy.log10(filter_banks)  # dB
         return filter_banks
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
