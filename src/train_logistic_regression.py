@@ -68,3 +68,11 @@ for i in path_yield:
 
 with open("logistic_regression_clf.pickle", "wb") as handle:
     pickle.dump(logistic_regression_clf, handle, protocol=pickle.HIGHEST_PROTOCOL)
+
+
+# Saving batch and label to check accuracy later
+with open("test_data_batch.pickle", "wb") as handle:
+    pickle.dump(test_batch, handle, protocol=pickle.HIGHEST_PROTOCOL)
+
+with open("test_data_label.pickle", "wb") as handle:
+    pickle.dump(test_label, handle, protocol=pickle.HIGHEST_PROTOCOL)
