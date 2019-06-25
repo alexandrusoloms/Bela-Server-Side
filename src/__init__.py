@@ -1,2 +1,2 @@
 
-__all__ = ["train_model_utils", "Spectrogram"]
+__all__ = ["train_model_utils"]

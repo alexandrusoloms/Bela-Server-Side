@@ -9,7 +9,7 @@ import pandas as pd
 from sklearn.linear_model import LogisticRegression
 
 
-from train_model_utils import make_path, YieldItems
+from .train_model_utils import make_path, YieldItems
 
 
 MAX_SHAPE = 950

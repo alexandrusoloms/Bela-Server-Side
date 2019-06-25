@@ -3,7 +3,7 @@ from random import shuffle
 import numpy as np
 from .__init__ import make_batches
 
-from ..Spectrogram import Spectrogram
+from .Spectrogram import Spectrogram
 
 
 class YieldItems(object):
