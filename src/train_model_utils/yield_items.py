@@ -68,10 +68,6 @@ class YieldItems(object):
         for (path, bird_id) in batch:
             # creating a spectrogram:
             spectrogram_data = Spectrogram(file_path=path).process()
-            print(spectrogram_data.shape)
-            # by default `Spectrogram` makes filters of 40 Bands
-            shape = (len(spectrogram_data) // 40, 40)
-            spectrogram_data = np.array(spectrogram_data).reshape(shape)
             spectrogram_data = np.mean(spectrogram_data, axis=1)[:max_shape]
             spectrogram_data = np.append(1, spectrogram_data)
             if spectrogram_data.shape[0] > max_shape:
