@@ -68,6 +68,7 @@ class YieldItems(object):
         for (path, bird_id) in batch:
             # creating a spectrogram:
             spectrogram_data = Spectrogram(file_path=path).process()
+            print(spectrogram_data.shape)
             # by default `Spectrogram` makes filters of 40 Bands
             shape = (len(spectrogram_data) // 40, 40)
             spectrogram_data = np.array(spectrogram_data).reshape(shape)
