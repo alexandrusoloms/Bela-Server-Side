@@ -43,16 +43,17 @@ class YieldItems(object):
         test_batches, train_batches = batches[:test_ratio], batches[test_ratio:]
         # yield test first
         for batch in test_batches:
-            yield False, cls.apply(batch=batch, master_bird_dataset=master_bird_dataset, max_shape=max_shape)
+            yield cls.apply(is_train_set=False, batch=batch, master_bird_dataset=master_bird_dataset, max_shape=max_shape)
         # finally, we yield each batch
         for batch in train_batches:
-            yield True, cls.apply(batch=batch, master_bird_dataset=master_bird_dataset, max_shape=max_shape)
+            yield cls.apply(is_train_set=True, batch=batch, master_bird_dataset=master_bird_dataset, max_shape=max_shape)
 
     @staticmethod
     def apply(is_train_set, batch, master_bird_dataset, max_shape):
         """
         method to ``apply`` on a batch
 
+        :param is_train_set: bool, True if it is training set
         :param batch: a list of tuples (bird_file_path, bird_id)
         :param master_bird_dataset: a pandas data frame
         :param max_shape: maximum number of dimension each instance should have
