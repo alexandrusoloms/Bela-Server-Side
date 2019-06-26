@@ -39,7 +39,7 @@ class YieldItems(object):
         batches = make_batches(list_of_items=files_path, batch_number=batch_size)
         # splitting batches into train, test and yielding test first
         length_of_batches = len(batches)
-        test_ratio = split_ratio * length_of_batches
+        test_ratio = int(split_ratio * length_of_batches)
         test_batches, train_batches = batches[:test_ratio], batches[test_ratio:]
         # yield test first
         yield cls.apply(batch=test_batches, master_bird_dataset=master_bird_dataset, max_shape=max_shape)
