@@ -1,5 +1,5 @@
 import os
-from random import shuffle
+from random import shuffle, seed
 import numpy as np
 from .data_handlers import make_batches
 
@@ -33,7 +33,8 @@ class YieldItems(object):
                           for file_name in files_path)
         # shuffling files_path, using a seed ``random_init`` for
         # reproducible results while testing
-        shuffle(files_path, random=random_init)
+        seed(random_init)
+        shuffle(files_path)
         # next, we create N batches of length ``batch_size`` using ``make_batches``
         batches = make_batches(list_of_items=files_path, batch_number=batch_size)
         # splitting batches into train, test and yielding test first
