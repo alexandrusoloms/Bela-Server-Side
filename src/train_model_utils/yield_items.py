@@ -76,4 +76,4 @@ class YieldItems(object):
                 batch_data.append(spectrogram_data)
                 # populating the real label of the file
                 batch_labels.append(master_bird_dataset[master_bird_dataset["itemid"] == bird_id]["hasbird"].values[0])
-        yield batch_data, batch_labels
+        return batch_data, batch_labels
