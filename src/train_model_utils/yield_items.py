@@ -1,7 +1,7 @@
 import os
 from random import shuffle
 import numpy as np
-from .__init__ import make_batches
+from .data_handlers import make_batches
 
 from .Spectrogram import Spectrogram
 
