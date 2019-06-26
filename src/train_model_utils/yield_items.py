@@ -42,13 +42,14 @@ class YieldItems(object):
         test_ratio = int(split_ratio * length_of_batches)
         test_batches, train_batches = batches[:test_ratio], batches[test_ratio:]
         # yield test first
-        yield cls.apply(batch=test_batches, master_bird_dataset=master_bird_dataset, max_shape=max_shape)
+        for batch in test_batches:
+            yield False, cls.apply(batch=batch, master_bird_dataset=master_bird_dataset, max_shape=max_shape)
         # finally, we yield each batch
         for batch in train_batches:
-            yield cls.apply(batch=batch, master_bird_dataset=master_bird_dataset, max_shape=max_shape)
+            yield True, cls.apply(batch=batch, master_bird_dataset=master_bird_dataset, max_shape=max_shape)
 
     @staticmethod
-    def apply(batch, master_bird_dataset, max_shape):
+    def apply(is_train_set, batch, master_bird_dataset, max_shape):
         """
         method to ``apply`` on a batch
 
@@ -63,7 +64,7 @@ class YieldItems(object):
         # we loop over this, using the path to make a spectrogram using `Spectrogram`
         # and use the bird_id to read the correct label, found in `master_bird_dataset`
         # we then populate these into `batch_data` and `batch_labels`
-        for (path, bird_id) in batch:
+        for (_, path, bird_id) in batch:
             # creating a spectrogram:
             spectrogram_data = Spectrogram(file_path=path).process()
             # by default `Spectrogram` makes filters of 40 Bands
@@ -76,4 +77,4 @@ class YieldItems(object):
                 batch_data.append(spectrogram_data)
                 # populating the real label of the file
                 batch_labels.append(master_bird_dataset[master_bird_dataset["itemid"] == bird_id]["hasbird"].values[0])
-        return batch_data, batch_labels
+        return is_train_set, batch_data, batch_labels

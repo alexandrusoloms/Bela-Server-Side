@@ -36,21 +36,19 @@ path_yield = YieldItems.yield_from_path(data_paths=data_paths, batch_size=100, m
 
 test_batch = list()
 test_label = list()
-train_batch = list()
-train_label = list()
 
-index = 0
 logistic_regression_clf = LogisticRegression()
 # The first item yielded from `YieldItems` is the test batch and test label,
 # and so we need to take it into account
 for i in path_yield:
     print("loading data...")
-    if index != 0:
-        train_batch, train_label = i
-        logistic_regression_clf.fit(train_batch, train_label)
+
+    is_train, batch, label = i
+    if is_train:
+        logistic_regression_clf.fit(batch, label)
     else:
-        test_batch, test_label = i
-    index += 1
+        test_batch.extend(batch)
+        test_label.extend(label)
 
 # saving model
 with open("logistic_regression_clf.pickle", "wb") as handle:
