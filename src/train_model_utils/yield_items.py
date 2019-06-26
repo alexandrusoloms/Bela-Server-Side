@@ -65,7 +65,7 @@ class YieldItems(object):
         # we loop over this, using the path to make a spectrogram using `Spectrogram`
         # and use the bird_id to read the correct label, found in `master_bird_dataset`
         # we then populate these into `batch_data` and `batch_labels`
-        for (_, path, bird_id) in batch:
+        for (path, bird_id) in batch:
             # creating a spectrogram:
             spectrogram_data = Spectrogram(file_path=path).process()
             # by default `Spectrogram` makes filters of 40 Bands
