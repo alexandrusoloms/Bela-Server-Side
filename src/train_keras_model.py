@@ -103,8 +103,8 @@ for i in path_yield:
         test_label.extend(label)
 
 # saving model
-with open("keras_clf.pickle", "wb") as handle:
-    pickle.dump(model, handle, protocol=pickle.HIGHEST_PROTOCOL)
+model.save('keras_clf.h5')  # creates a HDF5 file
+del model  # deletes the existing model
 
 # Saving batch and label to check accuracy later
 with open("keras_test_data_batch.pickle", "wb") as handle:
