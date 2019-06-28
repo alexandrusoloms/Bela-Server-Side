@@ -106,3 +106,5 @@ venv.bak/
 # my ignores
 .idea
 .idea/
+
+data/
