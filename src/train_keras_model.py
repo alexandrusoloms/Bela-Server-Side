@@ -13,7 +13,7 @@ from keras.layers import Conv2D, Dropout, MaxPooling2D, Dense, GlobalAveragePool
 from keras.models import Sequential, load_model
 from keras.layers.advanced_activations import LeakyReLU
 
-from train_model_utils import make_path, YieldItems
+from .train_model_utils import make_path, YieldItems
 
 MAX_SHAPE = 950
 
