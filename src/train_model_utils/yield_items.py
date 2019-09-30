@@ -115,11 +115,11 @@ class YieldItems(object):
         if yield_test:
             # yield test first, if False this is skipped. (saves time during epochs)
             for batch in test_batches:
-                yield cls.apply(is_train_set=False, batch=batch, master_bird_dataset=master_bird_dataset, max_shape=max_shape)
+                yield cls.aplly_spectrogram(is_train_set=False, batch=batch, master_bird_dataset=master_bird_dataset, max_shape=max_shape)
 
         # finally, we yield each batch
         for batch in train_batches:
-            yield cls.apply(is_train_set=True, batch=batch, master_bird_dataset=master_bird_dataset, max_shape=max_shape)
+            yield cls.aplly_spectrogram(is_train_set=True, batch=batch, master_bird_dataset=master_bird_dataset, max_shape=max_shape)
         # # yield test first
         # for batch in test_batches:
         #     yield cls.aplly_spectrogram(is_train_set=False, batch=batch, master_bird_dataset=master_bird_dataset, max_shape=max_shape)
