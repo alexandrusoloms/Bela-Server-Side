@@ -80,7 +80,7 @@ class YieldItems(object):
         return is_train_set, batch_data, batch_labels
 
     @classmethod
-    def yield_pre_computed_bela_spectrogram_from_path(cls, data_paths, batch_size, master_bird_dataset, max_shape, random_init=10, split_ratio=.3):
+    def yield_pre_computed_bela_spectrogram_from_path(cls, data_paths, batch_size, master_bird_dataset, max_shape, random_init=10, split_ratio=.3, yield_test=True):
         """
         yields ``batch_size`` data items at a time
 
@@ -112,12 +112,20 @@ class YieldItems(object):
         length_of_batches = len(batches)
         test_ratio = int(split_ratio * length_of_batches)
         test_batches, train_batches = batches[:test_ratio], batches[test_ratio:]
-        # yield test first
-        for batch in test_batches:
-            yield cls.aplly_spectrogram(is_train_set=False, batch=batch, master_bird_dataset=master_bird_dataset, max_shape=max_shape)
+        if yield_test:
+            # yield test first, if False this is skipped. (saves time during epochs)
+            for batch in test_batches:
+                yield cls.apply(is_train_set=False, batch=batch, master_bird_dataset=master_bird_dataset, max_shape=max_shape)
+
         # finally, we yield each batch
         for batch in train_batches:
-            yield cls.aplly_spectrogram(is_train_set=True, batch=batch, master_bird_dataset=master_bird_dataset, max_shape=max_shape)
+            yield cls.apply(is_train_set=True, batch=batch, master_bird_dataset=master_bird_dataset, max_shape=max_shape)
+        # # yield test first
+        # for batch in test_batches:
+        #     yield cls.aplly_spectrogram(is_train_set=False, batch=batch, master_bird_dataset=master_bird_dataset, max_shape=max_shape)
+        # # finally, we yield each batch
+        # for batch in train_batches:
+        #     yield cls.aplly_spectrogram(is_train_set=True, batch=batch, master_bird_dataset=master_bird_dataset, max_shape=max_shape)
 
     @staticmethod
     def aplly_spectrogram(is_train_set, batch, master_bird_dataset, max_shape):
