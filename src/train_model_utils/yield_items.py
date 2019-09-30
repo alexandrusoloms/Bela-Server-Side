@@ -149,8 +149,8 @@ class YieldItems(object):
                 spectrogram_data = handle.read().split()
             spectrogram_data = [eval(x) for x in spectrogram_data]
 
-            if len(spectrogram_data) >= max_shape * 40:
-                shape = (len(spectrogram_data) // 40, 40, 1)
+            if len(spectrogram_data) >= max_shape * 80:
+                shape = (len(spectrogram_data) // 80, 80, 1)
                 spectrogram_data = np.array(spectrogram_data).reshape(shape)
                 spectrogram_data = spectrogram_data[:max_shape, :, :]
                 # populating spectrogram_data
