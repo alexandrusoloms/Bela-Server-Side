@@ -100,7 +100,7 @@ class YieldItems(object):
                           for file in os.listdir(data_path))
         # each file name is the id of the item, this `files_path` becomes
         # a tuple(file_path, file_name) -> in order to have access to its label
-        files_path = list(tuple([file_name, file_name.split("txt/")[1].split(".")[0]])
+        files_path = list(tuple([file_name, file_name.split("txt_2/")[1].split(".")[0]])
                           for file_name in files_path)
         # shuffling files_path, using a seed ``random_init`` for
         # reproducible results while testing
