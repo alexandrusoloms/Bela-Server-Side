@@ -15,7 +15,7 @@ from keras.regularizers import l2
 
 from train_model_utils import make_path, YieldItems
 
-MAX_SHAPE = 998
+MAX_SHAPE = 1000
 
 data_paths = [
     make_path(path_name="/homes/amsolomes1/birdSongData/ff1010bird/txt_2/"),
@@ -92,11 +92,6 @@ for epoch in range(20):
     path_yield = YieldItems.yield_pre_computed_bela_spectrogram_from_path(data_paths=data_paths, batch_size=150,
                                                                           master_bird_dataset=master_bird_dataset,
                                                                           max_shape=MAX_SHAPE, yield_test=load_test)
-    # test_batch = list()
-    # test_label = list()
-
-    # The first item yielded from `YieldItems` is the test batch and test label,
-    # and so we need to take it into account
     batch_count = 0
     for i in path_yield:
         print("loading data...")
@@ -108,9 +103,6 @@ for epoch in range(20):
             random_indices = np.random.randint(0, len(test_batch), 500)
             history = model.fit(batch, label, validation_data=(np.array(test_batch)[random_indices], np.array(test_label)[random_indices]))
 
-            # with open("keras_history-batch-{}-epoch-{}.pickle".format(batch_count, epoch), "wb") as handle:
-            #     pickle.dump(history.history, handle, protocol=pickle.HIGHEST_PROTOCOL)
-
             batch_count += 1
         else:
             test_batch.extend(batch)
@@ -119,7 +111,7 @@ for epoch in range(20):
     load_test = False
 
     # saving model
-    model.save('keras_clf_final_model-epoch-{}.h5'.format(epoch))  # creates a HDF5 file
+    model.save('keras_clf_final_model-1000x80-3x1-epoch-{}.h5'.format(epoch))  # creates a HDF5 file
 
 
 del model  # deletes the existing model
