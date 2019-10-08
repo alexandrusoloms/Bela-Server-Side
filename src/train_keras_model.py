@@ -33,13 +33,13 @@ master_bird_dataset["itemid"] = master_bird_dataset["itemid"].apply(func=lambda 
 #
 
 # KERAS MODEL
-model = create_model(MAX_SHAPE=MAX_SHAPE)
+model = create_model(checkpoint="keras_clf_final_model-1000x80-3x1-epoch-3.h5")
 
 test_batch = list()
 test_label = list()
 load_test = True
 
-for epoch in range(20):
+for epoch in range(16):
     path_yield = YieldItems.yield_pre_computed_bela_spectrogram_from_path(data_paths=data_paths, batch_size=150,
                                                                           master_bird_dataset=master_bird_dataset,
                                                                           max_shape=MAX_SHAPE, yield_test=load_test)
@@ -62,7 +62,7 @@ for epoch in range(20):
     load_test = False
 
     # saving model
-    model.save('keras_clf_final_model-1000x80-3x1-epoch-{}.h5'.format(epoch))  # creates a HDF5 file
+    model.save('keras_clf_final_model-1000x80-3x1-epoch-{}.h5'.format(4 + epoch))  # creates a HDF5 file
 
 
 del model  # deletes the existing model
