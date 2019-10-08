@@ -7,12 +7,7 @@ import pickle
 import numpy as np
 import pandas as pd
 
-import keras
-from keras.layers import Conv2D, Dropout, MaxPooling2D, Dense, GlobalAveragePooling2D, Flatten, BatchNormalization, AveragePooling2D
-from keras.models import Sequential, load_model
-from keras.layers.advanced_activations import LeakyReLU
-from keras.regularizers import l2
-
+from load_keras_model import create_model
 from train_model_utils import make_path, YieldItems
 
 MAX_SHAPE = 1000
@@ -38,51 +33,7 @@ master_bird_dataset["itemid"] = master_bird_dataset["itemid"].apply(func=lambda 
 #
 
 # KERAS MODEL
-
-model = Sequential()
-# augmentation generator
-# code from baseline : "augment:Rotation|augment:Shift(low=-1,high=1,axis=3)"
-# keras augmentation:
-# preprocessing_function
-# convolution layers
-model.add(Conv2D(16, (3, 3), padding='valid', input_shape=(MAX_SHAPE, 80, 1), ))  # low: try different kernel_initializer
-model.add(BatchNormalization())  # explore order of Batchnorm and activation
-model.add(LeakyReLU(alpha=.001))
-model.add(MaxPooling2D(pool_size=(3, 3)))  # experiment with using smaller pooling along frequency axis
-model.add(Conv2D(16, (3, 3), padding='valid'))
-model.add(BatchNormalization())
-model.add(LeakyReLU(alpha=.001))
-model.add(MaxPooling2D(pool_size=(3, 3)))
-model.add(Conv2D(16, (3, 1), padding='valid'))
-model.add(BatchNormalization())
-model.add(LeakyReLU(alpha=.001))
-model.add(MaxPooling2D(pool_size=(3, 1)))
-
-model.add(Conv2D(16, (3, 1), padding='valid'))  # drfault 0.01. Try 0.001 and 0.001
-model.add(BatchNormalization())
-model.add(LeakyReLU(alpha=.001))
-model.add(MaxPooling2D(pool_size=(3, 1)))
-
-# dense layers
-model.add(Flatten())
-model.add(Dropout(0.5))
-model.add(Dense(256))
-model.add(BatchNormalization())
-model.add(LeakyReLU(alpha=.001))
-model.add(Dropout(0.5))
-model.add(Dense(32))
-model.add(BatchNormalization())
-model.add(LeakyReLU(alpha=.001))  # leaky relu value is very small experiment with bigger ones
-model.add(Dropout(0.5))  # experiment with removing this dropout
-model.add(Dense(1, activation='sigmoid'))
-
-adam = keras.optimizers.Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=None, decay=0.0)
-model.compile(optimizer=adam, loss='binary_crossentropy', metrics=['acc'])
-
-# # prepare callback
-# histories = my_callbacks.Histories()
-
-model.summary()
+model = create_model(MAX_SHAPE=MAX_SHAPE)
 
 test_batch = list()
 test_label = list()
